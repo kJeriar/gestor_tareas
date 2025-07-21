@@ -1,5 +1,3 @@
-# gestor_tareas.py
-
 import json
 import os
 
@@ -19,17 +17,18 @@ def guardar_tareas(tareas):
 
 # Agregar nueva tarea
 def agregar_tarea(tareas):
-    descripcion = input("Descripción de la nueva tarea: ")
+    descripcion = input("Escribe la descripción de tu nueva tarea: ")
     tarea = {"descripcion": descripcion, "estado": "Pendiente"}
     tareas.append(tarea)
     guardar_tareas(tareas)
-    print("✅ Tarea agregada correctamente.")
+    print("Tarea agregada. ¡Vamos sumando tareas por hacer!")
 
 # Ver tareas
 def ver_tareas(tareas):
     if not tareas:
-        print("No hay tareas registradas.")
+        print("Parece que no hay nada en la lista. ¡Buen trabajo!")
         return
+    print("\nLista de tareas:")
     for idx, tarea in enumerate(tareas):
         print(f"{idx + 1}. [{tarea['estado']}] {tarea['descripcion']}")
 
@@ -37,29 +36,29 @@ def ver_tareas(tareas):
 def marcar_completada(tareas):
     ver_tareas(tareas)
     try:
-        indice = int(input("Número de la tarea a marcar como completada: ")) - 1
+        indice = int(input("¿Cuál tarea ya terminaste? Ingresa su número: ")) - 1
         if 0 <= indice < len(tareas):
             tareas[indice]["estado"] = "Completada"
             guardar_tareas(tareas)
-            print("✅ Tarea marcada como completada.")
+            print("¡Bien hecho! Tarea marcada como completada.")
         else:
-            print("❌ Índice fuera de rango.")
+            print("Ese número no corresponde a ninguna tarea.")
     except ValueError:
-        print("❌ Entrada no válida.")
+        print("Por favor, ingresa un número válido.")
 
 # Eliminar tarea
 def eliminar_tarea(tareas):
     ver_tareas(tareas)
     try:
-        indice = int(input("Número de la tarea a eliminar: ")) - 1
+        indice = int(input("¿Qué tarea quieres eliminar? Ingresa su número: ")) - 1
         if 0 <= indice < len(tareas):
             tareas.pop(indice)
             guardar_tareas(tareas)
-            print("🗑️ Tarea eliminada.")
+            print("Tarea eliminada de la lista.")
         else:
-            print("❌ Índice fuera de rango.")
+            print("Ese número no está en la lista.")
     except ValueError:
-        print("❌ Entrada no válida.")
+        print("Entrada no válida. Intenta con un número.")
 
 # Menú principal
 def menu():
@@ -71,7 +70,7 @@ def menu():
         print("3. Marcar tarea como completada")
         print("4. Eliminar tarea")
         print("5. Salir")
-        opcion = input("Elige una opción: ")
+        opcion = input("¿Qué quieres hacer? Ingresa el número de opción: ")
 
         if opcion == "1":
             agregar_tarea(tareas)
@@ -82,10 +81,10 @@ def menu():
         elif opcion == "4":
             eliminar_tarea(tareas)
         elif opcion == "5":
-            print("¡Hasta luego!")
+            print("Gracias por usar el gestor. ¡Hasta la próxima!")
             break
         else:
-            print(" Opción inválida. Intenta nuevamente.")
+            print("Opción no válida. Elige un número del menú.")
 
 if __name__ == "__main__":
     menu()
